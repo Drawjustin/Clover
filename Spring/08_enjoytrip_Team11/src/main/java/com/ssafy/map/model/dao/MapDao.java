@@ -11,7 +11,7 @@ import com.ssafy.map.model.SidoDto;
 
 
 @Mapper
-public interface MapDao {
+public interface MapDao {	
 	
 	List<SidoDto> searchAllSido();
 	List<GugunDto> searchAllGugun(int sidoCode);
