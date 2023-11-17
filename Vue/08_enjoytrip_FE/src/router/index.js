@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ed0fe852aa71d4042c26a8ec6c0c3cb194123e5fc20ef1cab199fa5525d3f822
-size 587
+import { createRouter, createWebHistory } from 'vue-router';
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home'
+    },
+    {
+      path: '/about',
+      name: 'about'
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+    }
+  ]
+});
+
+export default router;
