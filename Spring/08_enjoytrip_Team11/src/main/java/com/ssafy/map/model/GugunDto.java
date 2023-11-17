@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1625d50402269bb96eb8b3ee3cee45583c8fbf9ce2843bea132bc02d103c2373
-size 210
+package com.ssafy.map.model;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class GugunDto {
+
+	private int gugunCode;
+	private String gugunName;
+	private int sidoCode;
+
+}

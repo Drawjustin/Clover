@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:aff866dbe59ad56614ad5a66735cfa32b21ee9311236b0f9c65fe2cc8c5bfc4c
-size 167
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper>
+</mapper>
