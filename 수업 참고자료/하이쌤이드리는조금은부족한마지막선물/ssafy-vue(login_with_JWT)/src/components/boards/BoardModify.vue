@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8e1306ec3aad595156b1a6e8b37d5e18a2133e0ef803c72565b3ca401c0da367
-size 476
+<script setup>
+import BoardFormItem from "./item/BoardFormItem.vue";
+</script>
+
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="sky">글수정</mark>
+        </h2>
+      </div>
+      <div class="col-lg-10 text-start">
+        <BoardFormItem type="modify" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
