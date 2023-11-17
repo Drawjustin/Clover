@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e20e26f3b53fe7e7f6772992c5b88e607c6542f312b8906e0f914bb1751eff20
-size 315
+<script setup></script>
+
+<template>
+  <div class="container text-center mt-3">
+    <div class="alert alert-info" role="alert">자유롭게 글쓰는 공간</div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<style>
+mark.sky {
+  background: linear-gradient(to top, #54fff9 20%, transparent 30%);
+}
+</style>

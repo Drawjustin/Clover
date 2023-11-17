@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fa4452a4f4e321eed33645fc04bae32b1257fe8554c205cd0bc4e25826986e88
-size 306
+package com.ssafy.vue;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class VueApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(VueApiApplication.class, args);
+	}
+
+}

@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:70477844857503d01cedefa20727f343bfad91b0e2c81bc328f146e7667b21d9
-size 346
+<script setup>
+import { useTodoStore } from "@/stores/todo";
+import TodoListItem from "./TodoListItem.vue";
+
+const todoStore = useTodoStore();
+</script>
+
+<template>
+  <div class="container text-center">
+    <todo-list-item v-for="todo in todoStore.todos" :key="todo.id" :todo="todo"></todo-list-item>
+  </div>
+</template>
+
+<style scoped></style>

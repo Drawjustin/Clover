@@ -1,22 +1,3 @@
-package com.ssafy.map.model.service;
-
-
-import java.util.List;
-
-import com.ssafy.map.model.AttractionInfoDto;
-import com.ssafy.map.model.GugunDto;
-import com.ssafy.map.model.SearchAttractionDto;
-import com.ssafy.map.model.SidoDto;
-
-
-public interface MapService {
-
-	List<SidoDto> searchAllSido();
-
-	List<GugunDto> searchAllGugun(int sidoCode);
-
-	List<AttractionInfoDto> search(SearchAttractionDto searchAttractionDto);
-	
-	
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2b7c013c655329cc0c05f947ab7376d17fb7debfe6cf67b3ef6071940e988b01
+size 424
