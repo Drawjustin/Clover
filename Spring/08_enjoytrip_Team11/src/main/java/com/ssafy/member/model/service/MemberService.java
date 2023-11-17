@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c4fd455a04fda9dda78716dcce8a9e711f6a4976441d4168fb9a04af01d3bf04
-size 77
+package com.ssafy.member.model.service;
+
+import com.ssafy.member.model.MemberDto;
+
+public interface MemberService {
+	//회원등록
+	void registerUser(MemberDto memberDto);
+	//로그인
+	MemberDto login(String user_id, String user_pass);
+	//회원수정
+	MemberDto modifyUser(String user_id, String user_name, String user_pass);
+	//회원삭제
+	void deleteUer(String user_id);
+	//비밀번호 찾기
+	MemberDto findPassword(MemberDto memberDto);
+	//아이디 찾기
+	MemberDto findUserId(String user_id);
+}

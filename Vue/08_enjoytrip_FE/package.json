@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:76a1908a8b392e210079d78a7cfbd91bb58c99c9bf1c68bcf324c48684331c17
-size 497
+{
+  "name": "08-enjoytrip-fe",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "vite": "^4.4.11"
+  }
+}

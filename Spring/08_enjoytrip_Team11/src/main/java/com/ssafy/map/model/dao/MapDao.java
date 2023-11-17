@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fd7ed96551113906423973625b5775af966590a0e9f2b8061430d56059538143
-size 465
+package com.ssafy.map.model.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.ssafy.map.model.AttractionInfoDto;
+import com.ssafy.map.model.GugunDto;
+import com.ssafy.map.model.SearchAttractionDto;
+import com.ssafy.map.model.SidoDto;
+
+
+@Mapper
+public interface MapDao {	
+	
+	List<SidoDto> searchAllSido();
+	List<GugunDto> searchAllGugun(int sidoCode);
+	List<AttractionInfoDto> search(SearchAttractionDto searchAttractionDto);
+
+}
