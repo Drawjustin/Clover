@@ -11,12 +11,12 @@ import com.ssafy.map.model.SidoDto;
 
 public interface MapService {
 
-	List<SidoDto> searchAllSido();
-
-	List<GugunDto> searchAllGugun(int sidoCode);
-
-	List<AttractionInfoDto> search(SearchAttractionDto searchAttractionDto);
-	
+//	List<SidoDto> searchAllSido();
+//
+//	List<GugunDto> searchAllGugun(int sidoCode);
+//
+//	List<AttractionInfoDto> search(SearchAttractionDto searchAttractionDto);
+//	
 	
 
 }
