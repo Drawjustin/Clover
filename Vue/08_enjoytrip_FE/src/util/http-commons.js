@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const {VITE_ENJOYTRIP_API_URL} = import.meta.env;
 
 function stationAxios(){
