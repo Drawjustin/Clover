@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d96541d28115acadf7dc84217d1f4f542f866bc0a94715d22acf7e10914ff275
-size 1106
+package com.ssafy.member.model;
+
+import lombok.Data;
+
+@Data
+public class MemberDto {
+	private String userId;
+	private String userName;
+	private String userPass;
+	private String joinDate;
+	private String userEmail;
+	
+}
