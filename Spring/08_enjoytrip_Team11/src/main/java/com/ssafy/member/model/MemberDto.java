@@ -10,4 +10,5 @@ public class MemberDto {
 	private String joinDate;
 	private String userEmail;
 	
+	
 }
