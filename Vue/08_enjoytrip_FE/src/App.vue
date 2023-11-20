@@ -1,5 +1,4 @@
 <script setup>
-import MapPage from "./views/MapPage.vue";
 import { RouterView } from "vue-router";
 import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
 </script>
@@ -7,7 +6,6 @@ import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
 <template>
   <div>
     <TheHeadingNavbar />
-    <!-- <map-page /> -->
     <RouterView />
   </div>
 </template>

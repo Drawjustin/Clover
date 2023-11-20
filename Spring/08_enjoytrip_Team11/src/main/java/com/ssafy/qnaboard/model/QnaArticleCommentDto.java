@@ -9,4 +9,5 @@ public class QnaArticleCommentDto {
 	private String qnaArticleCommentContent;
 	private String userId;
 	private String registerTime;
+	private String userName;
 }
