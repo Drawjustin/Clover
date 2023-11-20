@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:89d6faa51054fc8afbdaacd1516fc3aea73eb10f8b0befbe5e3977fdb5861c5a
-size 248
+<script setup>
+import { RouterView } from "vue-router";
+import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
+</script>
+
+<template>
+  <div>
+    <TheHeadingNavbar />
+    <RouterView />
+  </div>
+</template>
+
+<style scoped></style>
