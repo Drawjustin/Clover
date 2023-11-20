@@ -1,10 +1,12 @@
 <script setup>
-import LoginRegisterPage from './views/LoginRegisterPage.vue';
+import { RouterView } from "vue-router";
+import TheHeadingNavbar from "@/components/layout/TheHeadingNavbar.vue";
 </script>
 
 <template>
   <div>
-    <LoginRegisterPage />
+    <TheHeadingNavbar />
+    <RouterView />
   </div>
 </template>
 
