@@ -1,15 +1,9 @@
-<script setup>
-import Register from '../components/member/Register.vue';
-</script>
+<script setup></script>
 
 <template>
   <div>
-    <Register />
+    <router-view></router-view>
   </div>
 </template>
 
-<style scoped>
-.body {
-  background-color: blue;
-}
-</style>
+<style scoped></style>
