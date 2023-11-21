@@ -1,16 +1,3 @@
-package com.ssafy.tripboard.controller;
-
-import java.io.File;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/tripboard")
-public class TripBoardController {
-	@PostMapping("/upload-image")
-	void uploadImage(File file) {
-		System.out.println(file);
-	}
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:842f3e30061b5a35cededb6758ea9170a85bb66d491ac14ebd5bc3086aedbcf8
+size 8305
