@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7ce75fb01523a80fde796c6ed2bd4968fbfbdcddcb6e18d01e01181874d4b7ef
-size 835
+package com.ssafy.member.model;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class MemberModifyDto {
+	private String userId;
+	private String userName;
+	private String userPass;
+	private String userEmail;
+	private String userQuestionResult;
+
+}
