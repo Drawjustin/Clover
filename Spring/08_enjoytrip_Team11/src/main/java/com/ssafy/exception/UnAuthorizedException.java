@@ -1,11 +1,3 @@
-//package com.ssafy.vue.exception;
-//
-//public class UnAuthorizedException extends RuntimeException {
-//	
-//	private static final long serialVersionUID = 1L;
-//
-//	public UnAuthorizedException() {
-//		super("계정 권한이 유효하지 않습니다.\n다시 로그인을 하세요.");
-//	}
-//
-//}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f2f8ce248e6d2ded8d08ac270700b2f8efa8fbb9f09592f7df67571b62c63305
+size 273
