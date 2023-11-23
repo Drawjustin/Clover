@@ -1,13 +1,3 @@
-package com.ssafy.tripboard.model;
-
-import lombok.Data;
-
-@Data
-public class TripBoardFileDto {
-	private int tripBoardFileId;
-	private int tripBoardNo;
-	private String saveFolder;
-	private String originalFile;
-	private String saveFile;
-	
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2929a203ec6f5d979667397d5e096d4fccb298b427af00a7c3e0c83e2455ced8
+size 482
