@@ -1,15 +1,3 @@
-import {stationAxios} from "@/util/http-commons.js"
-
-const local = stationAxios();
-
-function listSido(success,fail){
-    local.get(`/attraction/sido`).then(success).catch(fail);
-}
-function listGugun(param, success, fail) {
-    local.get(`/attraction/gugun`, { params: param }).then(success).catch(fail);
-}
-async function listTriparea(param,success,fail){
-   await local.get(`/attraction/search`, {params : param} ).then(success).catch(fail);
-}
-
-export{listSido,listGugun,listTriparea};
+version https://git-lfs.github.com/spec/v1
+oid sha256:ea0c5da3f37455278f206beaff9da4af1e73c74a32628eaff6865fbf8bee147e
+size 524
