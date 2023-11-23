@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9a1b81ff75de90e8b400789dd4e7a750ff726223fdda04a27758c877e605b33b
-size 337
+//package com.ssafy.mail;
+//
+//import javax.mail.MessagingException;
+//import javax.mail.internet.MimeMessage;
+//
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.MimeMessageHelper;
+//
+//import lombok.Data;
+//
+//@Data
+//public class MailHandler {
+//	String makeCode(int size)
+//	
+//}
