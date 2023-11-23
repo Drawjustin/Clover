@@ -9,6 +9,9 @@
 
 <style>
 mark.sky {
-  background: linear-gradient(to top, #54fff9 20%, transparent 30%);
+  background: linear-gradient(to top, #6cc145 5%, transparent 10%);
+}
+body {
+  background-color: rgb(240, 248, 240);
 }
 </style>
