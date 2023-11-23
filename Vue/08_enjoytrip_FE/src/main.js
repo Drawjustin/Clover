@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+// text editer를 위한 quill
 
 import App from "./App.vue";
 import router from "./router";

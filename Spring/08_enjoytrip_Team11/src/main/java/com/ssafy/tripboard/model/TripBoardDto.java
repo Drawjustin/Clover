@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class TripBoardDto {
-	private int tripBoardNo;
+	private int tripArticleId;
 	private String userId;
 	private String userName;
 	private String registerTime;
