@@ -2,13 +2,16 @@
 
 <template>
   <div class="container text-center mt-3">
-    <div class="alert alert-info" role="alert">자유롭게 글쓰는 공간</div>
+    <div role="alert">자유롭게 글쓰는 공간</div>
     <router-view></router-view>
   </div>
 </template>
 
 <style>
 mark.sky {
-  background: linear-gradient(to top, #54fff9 20%, transparent 30%);
+  background: linear-gradient(to top, #6cc145 5%, transparent 10%);
+}
+body {
+  background-color: rgb(240, 248, 240);
 }
 </style>
