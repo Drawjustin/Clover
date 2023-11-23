@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:feb7f0d0b347545f149469caf6ac0fe04fdc98411fd805e545ff095c9806af4d
-size 485
+<script setup>
+import QnaBoardFormItem from './item/QnaBoardFormItem.vue';
+</script>
+
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="sky">글쓰기</mark>
+        </h2>
+      </div>
+      <div class="col-lg-10 text-start">
+        <QnaBoardFormItem type="regist" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>

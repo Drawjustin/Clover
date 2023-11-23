@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9ad0f02eb79f4961e397b864d27beff4956c52312bb780b17e8a77426c15a4d4
-size 320
+package com.ssafy.tripboard.model;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TripBoardListDto {
+	private List<TripBoardDto> articles;
+	private int currentPage;
+	private int totalPageCount;
+}

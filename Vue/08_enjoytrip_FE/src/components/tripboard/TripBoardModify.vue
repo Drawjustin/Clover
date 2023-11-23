@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a17ebf68d0015edc504a6b118c7a7d0d1d31c4b83c626a4924f28b6bae7a147f
-size 488
+<script setup>
+import TripBoardFormItem from "./item/TripBoardFormItem.vue";
+</script>
+
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="sky">글수정</mark>
+        </h2>
+      </div>
+      <div class="col-lg-10 text-start">
+        <TripBoardFormItem type="modify" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
