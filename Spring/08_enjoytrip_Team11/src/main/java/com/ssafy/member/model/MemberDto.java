@@ -9,5 +9,7 @@ public class MemberDto {
 	private String userPass;
 	private String joinDate;
 	private String userEmail;
+	private String token;
+	private String userQuestionResult;
 	
 }
