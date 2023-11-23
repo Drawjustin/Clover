@@ -1,5 +1,5 @@
 <script setup>
-import QnaBoardFormItem from './item/QnaBoardFormItem.vue';
+import QnaBoardFormItem from "./item/QnaBoardFormItem.vue";
 </script>
 
 <template>
