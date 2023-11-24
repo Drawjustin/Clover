@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9a0fc2886de28a6f56642d176352d2c76dc7b49697d08c338970c65d204a0d4d
-size 215
+// HTTP Status Code
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+export const httpStatusCode = {
+  OK: 200,
+  CREATE: 201,
+  NOCONTENT: 204,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOTFOUND: 404,
+};
