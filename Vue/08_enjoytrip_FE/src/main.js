@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0782fd6d62dbe81c28e4fea7840bc169cf0fc45a970dc18e3889774852101564
-size 580
+// text editer를 위한 quill
+// 11.23(목) 저녁세팅시작
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
+import App from './App.vue';
+import router from './router';
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+
+const app = createApp(App);
+const pinia = createPinia();
+
+pinia.use(piniaPluginPersistedstate);
+
+app.use(pinia);
+// app.use(createPinia().use(piniaPluginPersistedstate));
+app.use(router);
+
+router.isReady().then(() => {
+  app.mount('#app');
+});

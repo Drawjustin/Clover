@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b50bfb8d10041ea3db4acfff786234a32cfd3f1011e8bdd80bfa3e464cc40cc3
-size 638
+<script setup>
+defineProps({ article: Object });
+</script>
+
+<template>
+  <tr class="text-center">
+    <th scope="row">{{ article.qnaArticleId }}</th>
+    <td class="text-start">
+      <router-link
+        :to="{
+          name: 'qna-article-view',
+          params: { qnaArticleId: article.qnaArticleId },
+        }"
+        class="article-title link-dark"
+      >
+        {{ article.subject }}
+      </router-link>
+    </td>
+    <td>{{ article.userName }}</td>
+    <td>{{ article.hit }}</td>
+    <td>{{ article.registerTime }}</td>
+  </tr>
+</template>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

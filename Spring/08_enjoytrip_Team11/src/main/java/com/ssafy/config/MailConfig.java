@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3bf1c30475e487a13b2b028ea6a6eba77d59283d3ddb82e0d69aa5dd1d1fb30a
-size 1024
+//package com.ssafy.config;
+//
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSenderImpl;
+//
+//import java.util.Properties;
+//
+//@Configuration
+//public class MailConfig {
+//
+//    @Bean
+//    public JavaMailSender javaMailSender() {
+//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//        mailSender.setHost("smtp.naver.com");
+//        mailSender.setPort(465);
+//        mailSender.setUsername("guswhd903@naver.com");
+//        mailSender.setPassword("asdasdsdfsdf9");
+//
+//        Properties properties = mailSender.getJavaMailProperties();
+//        properties.put("mail.smtp.auth", true);
+//        properties.put("mail.smtp.ssl.enable", true);
+//        properties.put("mail.smtp.ssl.trust", "smtp.naver.com");
+//        properties.put("mail.smtp.starttls.enable", true);
+//
+//        return mailSender;
+//    }
+//}

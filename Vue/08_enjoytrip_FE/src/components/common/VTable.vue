@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4030afd5952b0d5f7db427d6d419236a123c1cb3e753df41915467fb37000bd6
-size 613
+<script setup>
+defineProps({ heads: Array, datas: Array });
+</script>
+
+<template>
+  <table class="table table-hover">
+    <thead>
+      <tr class="text-center">
+        <th scope="col" v-for="(head, index) in heads" :key="index">
+          {{ head }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center">
+        <!-- <th>{{ article.articleNo }}</th>
+        <td>{{ article.subject }}</td>
+        <td>{{ article.userName }}</td>
+        <td>{{ article.hit }}</td>
+        <td>{{ article.registerDate }}</td> -->
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<style scoped></style>

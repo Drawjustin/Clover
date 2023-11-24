@@ -1,3 +1,43 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:77d81f3a2bc9240277abb9d482d811332bfef5f78e83dc6191147eb1ff1f683b
-size 883
+package com.ssafy.map.model.service;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.map.model.AttractionInfoDto;
+import com.ssafy.map.model.GugunDto;
+import com.ssafy.map.model.SearchAttractionDto;
+import com.ssafy.map.model.SidoDto;
+import com.ssafy.map.model.dao.MapDao;
+
+
+
+@Service
+public class MapServiceImpl implements MapService {
+
+	private MapDao dao;
+
+	@Autowired
+	public MapServiceImpl(MapDao dao) {
+		super();
+		this.dao = dao;
+	}
+
+	@Override
+	public List<SidoDto> searchAllSido() {
+		return dao.searchAllSido();
+	}
+
+	@Override
+	public List<GugunDto> searchAllGugun(int sidoCode) {
+		return dao.searchAllGugun(sidoCode);
+	}
+
+	@Override
+	public List<AttractionInfoDto> search(SearchAttractionDto searchAttractionDto) {
+		return dao.search(searchAttractionDto);
+	}
+
+}

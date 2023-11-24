@@ -1,3 +1,44 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:976e54090da76032a5360e2ef121b130a91fe9b5a374d0b325193d906b58593d
-size 1038
+<script setup>
+import { ref, onMounted } from "vue";
+import { listArticleComment } from "@/api/tripboard";
+import TripBoardCommentItem from "./TripBoardCommentItem.vue";
+import TripBoardCommentWrite from "./TripBoardCommentWrite.vue";
+
+const articleComments = ref([]);
+
+const props = defineProps({
+  tripArticleId: Number,
+});
+
+onMounted(() => {
+  getArticleComment();
+});
+
+const getArticleComment = () => {
+  console.log(props.tripArticleId + "번글의 댓글 얻으러 가자!!!");
+  listArticleComment(
+    props.tripArticleId,
+    ({ data }) => {
+      articleComments.value = data;
+    },
+    (error) => {
+      console.log("error");
+    }
+  );
+};
+</script>
+
+<template>
+  <TripBoardCommentItem
+    v-for="comment in articleComments"
+    :key="comment.tripArticleCommentId"
+    :comment="comment"
+    @need-update="getArticleComment()"
+  />
+  <TripBoardCommentWrite
+    :trip-article-id="props.tripArticleId"
+    @need-update="getArticleComment()"
+  />
+</template>
+
+<style scoped></style>

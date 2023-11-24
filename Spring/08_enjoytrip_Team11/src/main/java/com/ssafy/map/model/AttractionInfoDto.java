@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:350c11752e8c2ad87907b7a4203d2731d44e753a1ddf68750b9aeb721b124ff2
-size 516
+package com.ssafy.map.model;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class AttractionInfoDto {
+
+	private int contentId;
+	private int contentTypeId;
+	private String title;
+	private String addr1;
+	private String addr2;
+	private String zipcode;
+	private String tel;
+	private String firstImage;
+	private String firstImage2;
+	private int readcount;
+	private int sidoCode;
+	private int gugunCode;
+	private double latitude;
+	private double longitude;
+	private String mlevel;
+}

@@ -1,3 +1,181 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c8ff050bafbd1972cdc96b063cd4e6f5a60fb84769a8f25093e67c01bc9db910
-size 4821
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.member.model.dao.MemberDao">
+
+	<resultMap id="member" type="MemberDto">
+		<result column="user_id" property="userId" />
+		<result column="user_pass" property="userPass" />
+		<result column="user_name" property="userName" />
+		<result column="join_date" property="joinDate" />
+		<result column="user_email" property="userEmail" />
+		<result column="user_question_result" property="userQuestionResult" />
+		<result column="token" property="token"/>
+	</resultMap>
+
+	<resultMap id="tripboard" type="TripBoardDto">
+		<result column="trip_article_id" property="tripArticleId"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="register_time" property="registerTime"/>
+		<result column="total_clover" property="totalClover"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="cost" property="cost"/>
+	</resultMap>
+
+	<!-- search 조건 -->
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="MemberDto">
+		insert into
+		member(user_id, user_pass, user_name, join_date, user_email, user_question_result)
+		values(#{userId},#{userPass},#{userName}, now(), #{userEmail}, #{userQuestionResult})
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="MemberDto" resultMap="member">
+		select *
+		from member
+		where user_id=#{userId}
+	</select>
+
+	<!-- 회원수정 -->
+	<update id="updateUser" parameterType="MemberModifyDto">
+		update member
+		set
+		user_pass=#{userPass}, user_name=#{userName}, user_email=#{userEmail}, user_question_result=#{userQuestionResult}
+		where user_id=#{userId}
+	</update>
+
+	<!-- 회원삭제 -->
+	<delete id="deleteUser" parameterType="String">
+		delete from member
+		where
+		user_id=#{userId}
+	</delete>
+
+	<!-- 비밀번호찾기 -->
+	<select id="selectFindPass" resultMap="member">
+		select *
+		from member
+		where
+		user_id=#{userId} and user_email=#{userEmail} and user_question_result=#{userQuestionResult}
+	</select>
+	
+	<!-- 임시비밀번호 생성 후 적용 -->
+	<update id="updateNewPass" parameterType="MemberDto">
+		update member
+		set
+		user_pass=#{userPass}
+		where user_id=#{userId}
+	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="selectFindId" resultMap="member">
+		select *
+		from member
+		where user_name=#{userName} and
+		user_email=#{userEmail}
+	</select>
+	
+	<!-- 좋아요 누른 게시물 찾기 -->
+	<select id="selectLikeBoard" parameterType = "map" resultMap="tripboard">
+		SELECT *
+		FROM `enjoytrip`.`trip_board` b
+		<if test="sortkey != null">
+			<if test="sortkey == 1">
+			WHERE `trip_article_id` IN (SELECT `trip_article_id` FROM `enjoytrip`.`clover` where user_id = #{userId})
+			</if>
+			<if test="sortkey == 2">
+			WHERE user_id = #{userId}
+			</if>
+		</if>
+		<include refid="search"></include>
+		<if test="sortkey != null">
+			<if test="sortkey == 1">
+				ORDER BY b.trip_article_id DESC
+				LIMIT #{start}, #{list_size}
+			</if>
+			<if test="sortkey == 2">
+				ORDER BY b.trip_article_id asc
+				LIMIT #{start}, #{list_size}
+			</if>
+		</if>
+	</select>
+	
+		<!-- search 조건에 맞는 데이터 수 계산 -->
+	<select id="getTotalArticleCount" parameterType = "map">	
+		SELECT count(trip_article_id)
+		FROM `enjoytrip`.`trip_board` 
+		WHERE `trip_article_id` IN (SELECT `trip_article_id` FROM `enjoytrip`.`clover` where user_id = #{userId})
+		<include refid="search"></include>
+	</select>
+<!-- 	<select id="getTotalArticleCount" parameterType="map"
+		resultType="int">
+		select count(trip_article_id)
+		from trip_board
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+-->
+	<select id="deleteLikeBoard" parameterType="TripBoardDto">
+	delete
+	from clover
+	where trip_article_id = #{tripArticleId} and user_id = #{userId};
+	</select>
+	
+	
+	<select id="userInfo" parameterType="string" resultMap="member">
+		select *
+		from member
+		where user_id = #{userId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update member
+		set token = #{token}
+		where user_id = #{userId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from member
+		where user_id = #{userId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update member
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

@@ -1,3 +1,161 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:65080a1bae9b2cf265f6023a8390efcccc194bf2818e7ae833615703b7f3f6d0
-size 4308
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.qnaboard.model.dao.QnaBoardDao">
+
+	<resultMap type="qnaBoardDto" id="article">
+		<result column="qna_article_id" property="qnaArticleId" />
+		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="hit" property="hit" />
+		<result column="register_time" property="registerTime" />
+	</resultMap>
+
+	<resultMap type="QnaArticleCommentDto" id="articleComment">
+		<result column="qna_article_comment_id"
+			property="qnaArticleCommentId" />
+		<result column="qna_article_id" property="qnaArticleId" />
+		<result column="qna_article_comment_content"
+			property="qnaArticleCommentContent" />
+		<result column="user_id" property="userId" />
+		<result column="register_time" property="registerTime" />
+		<result column="user_name" property="userName" />
+
+	</resultMap>
+
+
+	<!-- QnA 게시글 생성 -->
+	<insert id="insertArticle" parameterType="qnaBoardDto">
+		INSERT INTO qna_board (user_id, user_name, subject, content, hit,
+		register_time)
+		VALUES (#{userId},#{userName}, #{subject}, #{content},
+		0, now())
+		<selectKey resultType="int" keyProperty="qnaArticleId"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+	<!-- QnA 게시글 id로 찾기 -->
+	<select id="selectArticle" parameterType="int"
+		resultMap="article">
+		SELECT b.qna_article_id, b.user_id, b.subject, b.content,
+		b.hit,
+		b.register_time, m.user_name
+		FROM qna_board b, member m
+		WHERE
+		b.user_id =
+		m.user_id
+		AND b.qna_article_id =
+		#{qnaArticleId}
+	</select>
+
+	<!-- search 조건 -->
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+
+	<!-- search 조건에 맞는 데이터 수 계산 -->
+	<select id="getTotalArticleCount" parameterType="map"
+		resultType="int">
+		select count(qna_article_id)
+		from qna_board
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+
+	<!-- article list 찾기 -->
+	<select id="selectArticleList" parameterType="map"
+		resultMap="article">
+		SELECT b.qna_article_id, b.user_id, b.subject, b.content, b.hit,
+		b.register_time, m.user_name
+		FROM qna_board b, member m
+		WHERE b.user_id
+		=
+		m.user_id
+		<include refid="search"></include>
+		ORDER BY b.qna_article_id DESC
+		LIMIT #{start}, #{list_size}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="int">
+		UPDATE qna_board
+		SET hit =
+		hit+1
+		WHERE qna_article_id = #{qnaArticleId}
+	</update>
+
+	<!-- QnA 게시글 수정 -->
+	<update id="updateArticle" parameterType="qnaBoardDto">
+		update qna_board
+		set
+		subject = #{subject}, content = #{content}
+		where qna_article_id =
+		#{qnaArticleId}
+	</update>
+
+	<!-- QnA 게시글 삭제 -->
+	<delete id="deleteArticle" parameterType="int">
+		delete from qna_board
+		where
+		qna_article_id = #{qnaArticleId}
+	</delete>
+
+	<!-- 댓글 mapper -->
+
+	<insert id="insertArticleComment"
+		parameterType="qnaArticleCommentDto">
+		insert into qna_article_comment (qna_article_id,
+		qna_article_comment_content, user_id, register_time)
+		values
+		(#{qnaArticleId}, #{qnaArticleCommentContent}, #{userId}, now())
+		<!-- <selectKey resultType="int" keyProperty="qnaArticleCommentId" order="AFTER"> 
+			select last_insert_id() </selectKey> -->
+	</insert>
+
+
+	<delete id="deleteArticleComment" parameterType="int">
+		delete from
+		qna_article_comment
+		where qna_article_comment_id =
+		#{qnaArticleCommentId}
+	</delete>
+
+
+	<update id="updateArticleComment"
+		parameterType="qnaArticleCommentDto">
+		update qna_article_comment
+		set
+		qna_article_comment_content = #{qnaArticleCommentContent}
+		where
+		qna_article_comment_id = #{qnaArticleCommentId}
+	</update>
+
+
+	<select id="selectArticleCommentList" parameterType="int"
+		resultMap="articleComment">
+		select *
+		from qna_article_comment c, member m
+		where
+		c.qna_article_id =
+		#{qnaArticleId}
+		and c.user_id = m.user_id
+		order by register_time
+	</select>
+
+
+
+</mapper>

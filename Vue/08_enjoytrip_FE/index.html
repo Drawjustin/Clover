@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3a851f765fa418781e3739ab2de3a24463ed678bba68c40b355c205b8ed60011
-size 1177
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/styles.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- tagify 이용 (해시태그) -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+    <!-- quill -->
+    <!-- include VueJS first -->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- use the latest VueQuill release -->
+    <script src="https://unpkg.com/@vueup/vue-quill@latest"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@vueup/vue-quill@latest/dist/vue-quill.snow.prod.css" />
+    <!---->
+
+    <!-- image resize -->
+    <script src="https://unpkg.com/vue-image-upload-resize"></script>
+    <!---->
+
+    <title>Vite App</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

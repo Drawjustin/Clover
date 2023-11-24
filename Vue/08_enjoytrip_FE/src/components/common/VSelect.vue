@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bd161fae578e2158de42bc0df183cde5c76998a4c3a12c992ec0eb46c65716c1
-size 627
+<script setup>
+import { ref } from "vue";
+defineProps({ selectOption: Array });
+const emit = defineEmits(["onKeySelect"]);
+
+const key = ref("");
+
+const onSelect = () => {
+  console.log(key.value + "선택!!!");
+  emit("onKeySelect", key.value);
+};
+</script>
+
+<template>
+  <select
+    v-model="key"
+    class="form-select form-select-sm ms-5 me-1 w-50"
+    @change="onSelect"
+  >
+    <option
+      v-for="option in selectOption"
+      :key="option.value"
+      :value="option.value"
+      :disabled="option.value === '' ? true : false"
+    >
+      {{ option.text }}
+    </option>
+  </select>
+</template>
+
+<style scoped></style>

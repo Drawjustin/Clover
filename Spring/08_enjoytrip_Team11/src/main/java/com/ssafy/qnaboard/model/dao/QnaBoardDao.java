@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:84f2ee12e925b07a2d5142909aa1d91c7af36fc2157f32ff83705ce2bec7ee99
-size 1173
+package com.ssafy.qnaboard.model.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.ssafy.qnaboard.model.QnaArticleCommentDto;
+import com.ssafy.qnaboard.model.QnaBoardDto;
+import com.ssafy.qnaboard.model.QnaBoardListDto;
+
+@Mapper
+public interface QnaBoardDao {
+
+	void insertArticle(QnaBoardDto qnaBoardDto) throws SQLException;
+
+	QnaBoardDto selectArticle(int qnaBoardId) throws SQLException;
+
+	List<QnaBoardDto> selectArticleList(Map<String, Object> param) throws SQLException;
+
+	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
+
+	void updateHit(int articleId) throws SQLException;
+
+	void updateArticle(QnaBoardDto qnaBoardDto) throws SQLException;
+
+	void deleteArticle(int articleId) throws SQLException;
+
+	List<QnaArticleCommentDto> selectArticleCommentList(int qnaArticleId) throws SQLException;
+
+	void insertArticleComment(QnaArticleCommentDto qnaArticleCommentDto) throws SQLException;
+
+	void deleteArticleComment(int qnaArticleCommentId) throws SQLException;
+
+	void updateArticleComment(QnaArticleCommentDto qnaArticleCommentDto) throws SQLException;
+
+}

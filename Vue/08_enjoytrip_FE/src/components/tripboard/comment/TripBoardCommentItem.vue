@@ -1,3 +1,69 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1b66098b0153d3cf5a03189e492e166670090e3869bfd4eefaf3e41c1348dfff
-size 1902
+<script setup>
+import { deleteArticleComment } from "@/api/tripboard";
+import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from 'pinia';
+import { useMemberStore } from '@/stores/member';
+const memberStore = useMemberStore();
+const { userInfo } = storeToRefs(memberStore);
+const router = useRouter();
+
+// defineProps({
+//   comment: Object,
+// });
+
+const props = defineProps({
+  comment: Object,
+});
+const emit = defineEmits(["needUpdate"]);
+
+function onDeleteArticleComment() {
+  console.log(props.comment.tripArticleCommentId + "번 댓글 삭제하러 가자!!!");
+  // API 호출
+  deleteArticleComment(
+    props.comment.tripArticleCommentId,
+    ({ data }) => {
+      console.log("success");
+      emit("needUpdate");
+    },
+    (error) => {
+      console.log("error");
+    }
+  );
+}
+</script>
+
+<template>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="clearfix align-content-center">
+        <img
+          class="avatar me-2 float-md-start bg-light p-2"
+          src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+        />
+        <p>
+          <span class="fw-bold">{{ comment.userName }}</span> <br />
+          <span class="text-secondary fw-light">
+            {{ comment.registerTime }}
+          </span>
+          <span class="d-flex justify-content-end"> </span>
+        </p>
+      </div>
+    </div>
+    <div class="divider mb-3"></div>
+    <div class="text-secondary">
+      {{ comment.tripArticleCommentContent }}
+    </div>
+    <div class="d-flex justify-content-end">
+      <button v-if="comment.userName == userInfo.userId"
+        type="button"
+        class="btn btn-outline-danger mb-3 ms-1"
+        @click="onDeleteArticleComment"
+      >
+        댓글 삭제
+      </button>
+    </div>
+  </div>
+  <hr />
+</template>
+
+<style scoped></style>

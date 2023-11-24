@@ -1,3 +1,257 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f944bb25c7fda633538e3d6128570adbcca0fd94bcd5a1b406b2cb76e1de254b
-size 9003
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.tripboard.model.dao.TripBoardDao">
+
+    <resultMap id="boardDto" type="TripBoardDto">
+        <id property="tripArticleId" column="trip_article_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="totalClover" column="total_clover"/>
+        <result property="subject" column="subject"/>
+        <result property="content" column="content"/>
+        <result property="hit" column="hit"/>
+        <result property="cost" column="cost"/>
+
+        <!-- tripBoardFileDto -->
+        <association property="tripBoardFileDto" javaType="TripBoardFileDto">
+            <id property="tripBoardFileId" column="trip_board_file_id"/>
+            <result property="saveFolder" column="save_folder"/>
+            <result property="originalFile" column="original_file"/>
+            <result property="saveFile" column="save_file"/>
+            <!-- 다른 필드에 대한 매핑 -->
+        </association>
+
+        <collection property="tags" column="trip_article_id" javaType="ArrayList" ofType="TagDto"
+                    select="getTagByArticleId">
+        </collection>
+    </resultMap>
+
+    <resultMap id="tag" type="TagDto">
+        <id property="tripArticleId" column="trip_article_id"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="tagType" column="tag_type"/>
+    </resultMap>
+
+    <resultMap id="fileDto" type="TripBoardFileDto">
+        <result property="tripBoardFileId" column="trip_board_file_id"/>
+        <result property="tripArticleId" column="trip_article_id"/>
+        <result property="saveFolder" column="save_folder"/>
+        <result property="originalFile" column="original_file"/>
+        <result property="saveFile" column="save_file"/>
+    </resultMap>
+
+    <resultMap type="TripArticleCommentDto" id="articleComment">
+        <result column="trip_article_comment_id"
+                property="tripArticleCommentId"/>
+        <result column="trip_article_id" property="tripArticleId"/>
+        <result column="trip_article_comment_content"
+                property="tripArticleCommentContent"/>
+        <result column="user_id" property="userId"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="user_name" property="userName"/>
+
+    </resultMap>
+
+    <select id="getTagByArticleId" resultMap="tag">
+        SELECT trip_article_id, tag_name, tag_type
+        FROM tag
+        WHERE trip_article_id = #{trip_article_id}
+    </select>
+
+
+    <sql id="search">
+        <if test="word != null and word != ''">
+            <if test="key == 'subject'">
+                and ${key} like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'subject'">
+                and ${key} = #{word}
+            </if>
+        </if>
+    </sql>
+
+    <!-- search 조건에 맞는 데이터 수 계산 -->
+    <select id="getTotalArticleCount" parameterType="map"
+            resultType="int">
+        select count(tbd.trip_article_id)
+        from trip_board tbd
+        <if test="key=='tag_name'">
+            JOIN tag t on tbd.trip_article_id = t.trip_article_id
+        </if>
+        <where>
+            <include refid="search"></include>
+        </where>
+    </select>
+
+    <select id="selectArticleList" parameterType="map" resultMap="boardDto">
+        SELECT
+        tbd.trip_article_id,
+        tbd.user_id,
+        m.user_name,
+        tbd.register_time,
+        tbd.total_clover,
+        tbd.subject,
+        tbd.hit,
+        tbd.cost,
+        tbfd.trip_board_file_id,
+        tbfd.trip_article_id,
+        tbfd.save_folder,
+        tbfd.original_file,
+        tbfd.save_file
+        FROM trip_board tbd
+        LEFT JOIN trip_board_file tbfd ON tbd.trip_article_id = tbfd.trip_article_id
+        LEFT JOIN member m ON tbd.user_id = m.user_id
+        <if test="key=='tag_name'">
+            JOIN tag t on tbd.trip_article_id = t.trip_article_id
+        </if>
+
+        <where>
+            <include refid="search"></include>
+        </where>
+        <if test="order != null and order != ''">
+            ORDER BY ${order} DESC
+        </if>
+        LIMIT #{start}, #{list_size}
+    </select>
+
+
+    <!-- trip 게시글 생성 -->
+    <insert id="insertArticle" parameterType="tripBoardDto" useGeneratedKeys="true" keyProperty="tripArticleId"
+            keyColumn="trip_article_id">
+        INSERT INTO trip_board (user_id,user_name, subject, content, hit,
+        register_time, total_clover, cost)
+        VALUES (#{userId},"default", #{subject}, #{content}, 0,
+        now(), #{totalClover}, #{cost})
+        <selectKey resultType="int" keyProperty="tripArticleId"
+                   order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="insertFile" parameterType="tripBoardFileDto">
+        INSERT INTO trip_board_file (trip_article_id, save_folder, original_file, save_file)
+        VALUES (#{tripArticleId}, #{saveFolder}, #{originalFile}, #{saveFile})
+    </insert>
+
+    <insert id="insertTag" parameterType="java.util.List">
+        INSERT INTO tag (trip_article_id, tag_name, tag_type)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.tripArticleId}, #{item.tagName}, #{item.tagType})
+        </foreach>
+    </insert>
+
+
+    <select id="selectArticle" resultMap="boardDto">
+        SELECT tbd.trip_article_id,
+               tbd.user_id,
+               m.user_name,
+               tbd.register_time,
+               tbd.total_clover,
+               tbd.subject,
+               tbd.content,
+               tbd.hit,
+               tbd.cost,
+               tbfd.trip_board_file_id,
+               tbfd.trip_article_id,
+               tbfd.save_folder,
+               tbfd.original_file,
+               tbfd.save_file
+        FROM trip_board tbd
+                 LEFT JOIN trip_board_file tbfd ON tbd.trip_article_id = tbfd.trip_article_id
+                 LEFT JOIN member m ON tbd.user_id = m.user_id
+        WHERE tbd.trip_article_id = #{tripArticleId}
+    </select>
+
+    <update id="updateHit" parameterType="int">
+        UPDATE trip_board
+        SET hit = hit + 1
+        WHERE trip_article_id = #{tripArticleId}
+    </update>
+
+    <select id="selectFile" parameterType="int" resultMap="fileDto">
+        SELECT *
+        FROM trip_board_file
+        WHERE trip_article_id = #{tripArticleId}
+    </select>
+
+    <delete id="deleteArticle" parameterType="int">
+        delete
+        from trip_board
+        where trip_article_id = #{tripArticleId}
+    </delete>
+
+    <update id="updateArticle" parameterType="tripBoardDto">
+        update trip_board
+        set subject = #{subject},
+            content = #{content},
+            cost    = #{cost}
+        where trip_article_id =
+              #{tripArticleId}
+    </update>
+
+    <update id="updateFile" parameterType="tripBoardFileDto">
+        update trip_board_file
+        set save_folder   = #{saveFolder},
+            original_file = #{originalFile},
+            save_file     = #{saveFile}
+        where trip_article_id = #{tripArticleId}
+    </update>
+
+    <delete id="deleteTagsByArticleId">
+        delete
+        from tag
+        where trip_article_id = #{tripArticleId}
+    </delete>
+
+<!--    <select id="findClover" resultType="int">-->
+<!--        select count(*)-->
+<!--        from clover-->
+<!--        where trip_article_id = #{tripArticleId} and user_id = #{userId}-->
+<!--    </select>-->
+
+
+    <!-- 댓글 mapper -->
+
+    <insert id="insertArticleComment"
+            parameterType="tripArticleCommentDto">
+        insert into trip_article_comment (trip_article_id,
+        trip_article_comment_content, user_id, register_time)
+        values
+        (#{tripArticleId}, #{tripArticleCommentContent}, #{userId}, now())
+        <!-- <selectKey resultType="int" keyProperty="tripArticleCommentId" order="AFTER">
+            select last_insert_id() </selectKey> -->
+    </insert>
+
+
+    <delete id="deleteArticleComment" parameterType="int">
+        delete
+        from trip_article_comment
+        where trip_article_comment_id =
+              #{tripArticleCommentId}
+    </delete>
+
+
+    <update id="updateArticleComment"
+            parameterType="tripArticleCommentDto">
+        update trip_article_comment
+        set trip_article_comment_content = #{tripArticleCommentContent}
+        where trip_article_comment_id = #{tripArticleCommentId}
+    </update>
+
+
+    <select id="selectArticleCommentList" parameterType="int"
+            resultMap="articleComment">
+        select *
+        from trip_article_comment c,
+             member m
+        where c.trip_article_id =
+              #{tripArticleId}
+          and c.user_id = m.user_id
+        order by register_time
+    </select>
+
+</mapper>

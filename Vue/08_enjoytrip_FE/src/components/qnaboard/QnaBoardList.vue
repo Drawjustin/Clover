@@ -1,3 +1,112 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f90755502f1a629c2f7ae224101ecf461016355936e1c15a4759c58b400b47c0
-size 3534
+<script setup>
+import { listArticle } from '@/api/qnaboard';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+import VSelect from '@/components/common/VSelect.vue';
+import QnaBoardListItem from '@/components/qnaboard/item/QnaBoardListItem.vue';
+import PageNavigation from '@/components/common/PageNavigation.vue';
+import { list } from 'postcss';
+
+const router = useRouter();
+
+const selectOption = ref([
+  { text: '검색조건', value: '' },
+  { text: '글번호', value: 'qna_article_id' },
+  { text: '제목', value: 'subject' },
+  { text: '작성자아이디', value: 'user_id' }
+]);
+
+const articles = ref([]);
+const currentPage = ref(1);
+const totalPage = ref(0);
+const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+const param = ref({
+  pgno: currentPage.value,
+  spp: VITE_ARTICLE_LIST_SIZE,
+  key: '',
+  word: ''
+});
+
+onMounted(() => {
+  getArticleList();
+});
+
+const changeKey = (val) => {
+  console.log('BoarList에서 선택한 조건 : ' + val);
+  param.value.key = val;
+};
+
+const getArticleList = () => {
+  console.log('서버에서 글목록 얻어오자!!!', param.value);
+  // API 호출
+  listArticle(
+    param.value,
+    ({ data }) => {
+      console.log(data);
+      articles.value = data.articles;
+      currentPage.value = data.currentPage;
+      totalPage.value = data.totalPageCount;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const onPageChange = (val) => {
+  console.log(val + '번 페이지로 이동 준비 끝!!!');
+  currentPage.value = val;
+  param.value.pgno = val;
+  getArticleList();
+};
+
+const moveWrite = () => {
+  router.push({ name: 'qna-article-write' });
+};
+</script>
+
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="sky">글목록</mark>
+        </h2>
+      </div>
+      <div class="col-lg-10">
+        <div class="row align-self-center mb-2">
+          <div class="col-md-2 text-start">
+            <button type="button" class="btn btn-outline-success" @click="moveWrite">글쓰기</button>
+          </div>
+          <div class="col-md-5 offset-5">
+            <form class="d-flex">
+              <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
+                <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center">
+              <th scope="col"><img src="../../img/네잎클로버.png" alt="" style="width: 20px" /></th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">조회수</th>
+              <th scope="col">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <QnaBoardListItem v-for="article in articles" :key="article.qnaArticleId" :article="article"></QnaBoardListItem>
+          </tbody>
+        </table>
+      </div>
+      <PageNavigation :current-page="currentPage" :total-page="totalPage" @pageChange="onPageChange"></PageNavigation>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
